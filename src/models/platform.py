@@ -172,7 +172,19 @@ class  DiscordPlatform(Platform):
         """
         try:
             # Get color for this day
-            color = self.day_colors.get(day.day_name, 0)
+            if self.config.time_settings.discord_unix_timestamp:
+                # Get day name from discord timestamp
+                match = re.search(r"<t:(\d+):F>", day.day_name)
+                if match:
+                    unix_ts = int(match.group(1))
+                    dt = datetime.fromtimestamp(unix_ts)
+                    ts_day = dt.strftime('%A')
+                    color = self.day_colors.get(ts_day, 1)
+                else:
+                    logger.error(f"☠️Invalid Discord timestamp format")
+                    color = 0
+            else:
+                color = self.day_colors.get(day.day_name, 0)
 
             # Format TV and movie events
             tv_formatted = [

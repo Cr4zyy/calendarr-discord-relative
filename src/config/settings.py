@@ -21,7 +21,8 @@ from constants import (
     DEFAULT_DISCORD_HIDE_MENTION_INSTRUCTIONS,
     DEFAULT_SHOW_TIMEZONE_IN_SUBHEADER,
     DEFAULT_ENABLE_CUSTOM_DISCORD_FOOTER,
-    DEFAULT_ENABLE_CUSTOM_SLACK_FOOTER
+    DEFAULT_ENABLE_CUSTOM_SLACK_FOOTER,
+    DEFAULT_DISCORD_UNIX_TIMESTAMP,
 )
 
 logger = logging.getLogger("config")
@@ -93,10 +94,12 @@ class TimeSettings:
     use_24_hour: bool = DEFAULT_USE_24_HOUR
     add_leading_zero: bool = DEFAULT_ADD_LEADING_ZERO
     display_time: bool = DEFAULT_DISPLAY_TIME
+    discord_unix_timestamp: bool = DEFAULT_DISCORD_UNIX_TIMESTAMP
     
     def __post_init__(self):
         try:
             logger.debug(f"🔧  Initialized TimeSettings: use_24_hour={self.use_24_hour}, "
+                         f"discord_unix_timestamp={self.discord_unix_timestamp}, "
                          f"add_leading_zero={self.add_leading_zero}, display_time={self.display_time}")
         except Exception as e:
             logger.error(f"Error initializing TimeSettings: {e}")
@@ -548,7 +551,8 @@ def load_config_from_env() -> Config:
             time_settings = TimeSettings(
                 use_24_hour=get_env_bool("USE_24_HOUR", DEFAULT_USE_24_HOUR),
                 add_leading_zero=get_env_bool("ADD_LEADING_ZERO", DEFAULT_ADD_LEADING_ZERO),
-                display_time=get_env_bool("DISPLAY_TIME", DEFAULT_DISPLAY_TIME)
+                display_time=get_env_bool("DISPLAY_TIME", DEFAULT_DISPLAY_TIME),
+                discord_unix_timestamp=get_env_bool("DISCORD_UNIX_TIMESTAMP", DEFAULT_DISCORD_UNIX_TIMESTAMP)
             )
             logger.debug(f"✅  Loaded time settings: {time_settings}")
         except Exception as e:

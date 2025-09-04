@@ -4,7 +4,7 @@
 import logging
 import re
 from typing import Dict, List, Tuple
-from datetime import datetime
+from datetime import datetime, time
 from collections import defaultdict
 
 from models.day import Day
@@ -83,7 +83,15 @@ class FormatterService:
         # Create Day objects
         days = []
         for date_obj, content in sorted(days_data.items()): # Use date_obj to avoid confusion
-            day_name_str = date_obj.strftime('%A, %b %d') # Format the name string
+            if self.config.time_settings.discord_unix_timestamp:
+                # Format as Unix timestamp for Discord
+                dt = datetime.combine(date_obj, time())
+                unix_ts = int(dt.timestamp())
+                day_name_str = f"<t:{unix_ts}:F>"
+            else:
+                day_name_str = date_obj.strftime('%A, %b %d') # Format the name string
+
+            
             day = Day(
                 name=day_name_str, # Pass the formatted name
                 date=date_obj, # Pass the original date object
@@ -167,6 +175,7 @@ class FormatterService:
         display_time = self.config.time_settings.display_time
         use_24_hour = self.config.time_settings.use_24_hour
         add_leading_zero = self.config.time_settings.add_leading_zero
+        discord_unix_timestamp = self.config.time_settings.discord_unix_timestamp
         
         # Parse datetime components
         dt_parts = parse_event_datetime(start, self.config.timezone)
@@ -174,11 +183,15 @@ class FormatterService:
         # Format time string if display_time is enabled
         time_str = None
         if display_time:
-            time_str = format_time(
-                dt_parts["hour"], 
-                dt_parts["minute"], 
-                use_24_hour=use_24_hour,
-                add_leading_zero=add_leading_zero
+            if discord_unix_timestamp:
+                # Format as Unix timestamp for Discord
+                time_str = f"<t:{int(dt_parts['timestamp'])}:R>"
+            else:
+                time_str = format_time(
+                    dt_parts["hour"],
+                    dt_parts["minute"],
+                    use_24_hour=use_24_hour,
+                    add_leading_zero=add_leading_zero
             )
         
         # Split show name from episode details if possible
