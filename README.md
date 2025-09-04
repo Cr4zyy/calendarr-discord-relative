@@ -1,10 +1,17 @@
-![Docker Pulls](https://img.shields.io/docker/pulls/jordyjordyjordy/calendarr)
-![GitHub Release](https://img.shields.io/github/v/release/jordanlambrecht/calendarr)
-![GitHub last commit](https://img.shields.io/github/last-commit/jordanlambrecht/calendarr)
 
 # 📆 Calendarr(discord relative)
 
 `DISCORD_UNIX_TIMESTAMP=True` for discord timestamps
+
+Image available `iamcr4zy/calendarr:latest`
+
+
+
+## Original readme
+![Docker Pulls](https://img.shields.io/docker/pulls/jordyjordyjordy/calendarr)
+![GitHub Release](https://img.shields.io/github/v/release/jordanlambrecht/calendarr)
+![GitHub last commit](https://img.shields.io/github/last-commit/jordanlambrecht/calendarr)
+
 
 A simple Docker container that fetches upcoming airings/releases for TV shows and movies from Sonarr and Radarr calendars and posts them to Discord on a schedule.
 
