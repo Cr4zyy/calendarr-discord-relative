@@ -2,7 +2,9 @@
 ![GitHub Release](https://img.shields.io/github/v/release/jordanlambrecht/calendarr)
 ![GitHub last commit](https://img.shields.io/github/last-commit/jordanlambrecht/calendarr)
 
-# 📆 Calendarr
+# 📆 Calendarr(discord relative)
+
+`DISCORD_UNIX_TIMESTAMP=True` for discord timestamps
 
 A simple Docker container that fetches upcoming airings/releases for TV shows and movies from Sonarr and Radarr calendars and posts them to Discord on a schedule.
 
@@ -91,6 +93,8 @@ docker run -d \
 | `USE_24_HOUR`                         | Boolean | `true`          | Use 24-hour time format (Optional)                                                                      |
 | `USE_DISCORD`                         | Boolean | `true`          | Enable Discord notifications (Optional)                                                                 |
 | `USE_SLACK`                           | Boolean | `false`         | Enable Slack notifications (Optional)                                                                   |
+| `DISCORD_UNIX_TIMESTAMP`              | Boolean | `false`         | Enable Discord relative timestamps (Optional)                                                                   |
+
 
 \* Required.
 ** Required if `USE_DISCORD` is `true`.
