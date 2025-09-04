@@ -1,5 +1,6 @@
 #!/bin/sh
 # entrypoint.sh
+set -e
 
 # Define source (in image) and destination (volume mount point)
 DEFAULT_FOOTERS_DIR="/app/default_footers"

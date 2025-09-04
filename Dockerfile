@@ -2,8 +2,8 @@ FROM python:3.13.3-slim
 
 WORKDIR /app
 
-LABEL org.opencontainers.image.source=https://github.com/jordanlambrecht/calendarr
-LABEL org.opencontainers.image.description="Calendar feeds from Sonarr/Radarr to Discord and Slack"
+LABEL org.opencontainers.image.source=https://github.com/iamcr4zy/calendarr
+LABEL org.opencontainers.image.description="Calendar feeds from Sonarr/Radarr to Discord and Slack with Discord relative timestamps"
 LABEL org.opencontainers.image.licenses=GPL-3.0
 
 COPY requirements.txt .
@@ -25,6 +25,8 @@ RUN mkdir -p /app/logs
 ENV PYTHONUNBUFFERED=1
 
 EXPOSE 5000
+
+STOPSIGNAL SIGTERM
 
 # Set the entrypoint script
 ENTRYPOINT ["/app/entrypoint.sh"]

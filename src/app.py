@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # src/app.py
 
+import signal
 import sys
 import io
 from contextlib import redirect_stdout, redirect_stderr
@@ -33,7 +34,20 @@ cli.show_server_banner = lambda *_: None
 
 config = None
 logger = None
+scheduler = None
 
+def shutdown(signum, frame):
+    logger.info(f"🔌 Received shutdown signal ({signum}), shutting down...")
+    try:
+        if scheduler:
+            scheduler.shutdown(wait=False)
+            logger.info("🛑 Scheduler shutdown complete.")
+    except Exception as e:
+        logger.error(f"Error shutting down scheduler: {e}")
+    sys.exit(0)
+
+signal.signal(signal.SIGINT, shutdown)
+signal.signal(signal.SIGTERM, shutdown)
 
 def init_app():
     """Initialize application configuration and logging"""
